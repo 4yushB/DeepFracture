@@ -1,0 +1,33 @@
+.form-control{
+
+  border-radius: 10px;
+
+}
+body {
+  background-color: rgb(34, 31, 31);
+  color: white;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.parent {
+  margin: 1rem;
+  padding: 1rem 1rem;
+  text-align: center;
+}
+.child {
+  display: inline-block;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}

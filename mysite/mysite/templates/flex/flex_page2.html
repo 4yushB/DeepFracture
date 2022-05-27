@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+<br>
+<center><h1></h1></center>
+
+  <div>
+      {{ self.subtitle }}
+  </div>
+
+<div class="container">
+<br><br>
+<center>
+
+  {% for block in page.content %}
+  
+    {% include_block block %}
+    
+    <br>
+   
+  {% endfor %}
+</center>
+</div>
+<center>
+  <label for="fname">Staff ID:</label>
+  <input type="text" id="fname" name="fname"><br><br>
+  <label for="lname">Password:</label>
+  <input type="text" id="lname" name="lname"><br><br>
+  <input type="submit" value="Login">
+</center>
+{% endblock %}

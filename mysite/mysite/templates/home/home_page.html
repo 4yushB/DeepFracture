@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block extra_css %}
+    <style>
+      body{
+        padding-top: 100px;
+      }
+    </style>
+{% endblock %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+<div class="container">
+{% block content %}
+
+  {% image self.banner_image width-1500 as img %}
+
+  <center><h1 class="display-4">{{ self.banner_title }}</h1></center>
+  <center><div class="lead">
+    <h4>{{ self.banner_subtitle|richtext }}</h4>
+    <br>
+    <img src="{{ img.url }}" class="d-block w-100" alt="{{ img.alt }}">
+
+    <br><br><br>
+  </div></center>
+
+  
+  
+<br>
+  <div class="container">
+      <br>
+
+      
+      {% for block in page.contentCard %}
+
+        {% include_block block %}
+
+      {% endfor %}
+      
+  </div>
+  
+<br>
+  <center><h3>Who are we?</h3></center>
+  <div style="margin-left:50px" class="row">
+    <div class="column">
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="HORIZONTAL" data-vanity="ayush-bilash" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://au.linkedin.com/in/ayush-bilash?trk=profile-badge">Ayush Bilash</a></div>
+    </div>
+    <div class="column">
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="HORIZONTAL" data-vanity="callum-liasides-85615b23a" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://au.linkedin.com/in/callum-liasides-85615b23a?trk=profile-badge%22%3E">Callum Liasides</a></div>
+    </div>
+    <div class="column">
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="HORIZONTAL" data-vanity="alyssa-liang-85783679" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://au.linkedin.com/in/alyssa-liang-85783679?trk=profile-badge%22%3E">Alyssa Liang</a></div>
+    </div>
+  </div>
+ 
+
+{% endblock %}
+</div>

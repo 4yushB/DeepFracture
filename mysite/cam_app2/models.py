@@ -83,17 +83,25 @@ class ImagePage(Page):
     def serve(self, request):
 
         context = self.reset_context(request)
-        reset()
+        #reset()
         emptyButtonFlag = False
         if request.POST.get('start')=="":
             print(request.POST.get('start'))
-            print("Start selected new")
+            print("Start selected new2")
+            file1 = open(r'C:\Users\4yush\Documents\DeepFracture\mysite\media\uploadedPics\img_list.txt', 'r')
+            lines = file1.readlines()
             #this for loop iterates through the whole folder for items, then if the item is a file (and not a directory) it will run the detect script
-            for img in os.listdir(r'C:\Users\4yush\Documents\DeepFracture\mysite\media\uploadedPics'): #this is the directory that has all the images
-                f = os.path.join(r'C:\Users\4yush\Documents\DeepFracture\mysite\media\uploadedPics', img) #this joins the absolute path for the directory with the images, with the image filename, and sets it to the f variable
-                if os.path.isfile(f): #this checks if f is a file, and not a directory
-                    os.system('python cam_app2\detect.py')
-                    print(f)
+            for line in lines: #this is the directory that has all the images
+                f = line.strip() #this joins the absolute path for the directory with the images, with the image filename, and sets it to the f variable
+                path = r'C:\Users\4yush\Documents\DeepFracture\mysite' + f
+                print(path)
+                #if os.path.isfile(f): #this checks if f is a file, and not a directory
+                os.system('python cam_app2\Test1\yolov5\detect.py --source=' + path + ' --weights='+r'C:\Users\4yush\Documents\DeepFracture\mysite\cam_app2\Test1\yolov5\runs\train\exp2\weights\best.pt' + '  --img=416 --conf=0.5 --save-txt')
+                print(path)
+                with open(Path(f'{settings.MEDIA_ROOT}/Result/Result.txt'), 'a') as f:
+                    f.write(str(filename))
+                    f.write("\n")
+                
                     #the final line runs the detect script. only need to change:
                     # detect script path
                     # source img path that you want to test

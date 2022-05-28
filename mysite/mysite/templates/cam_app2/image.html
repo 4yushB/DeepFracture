@@ -126,9 +126,9 @@
       <li class="nav-item">
         <a class="nav-link active" id="image-tab" data-toggle="tab" data-target="#home"  aria-controls="home">Raw Images</a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" id="result-tab" data-toggle="tab" data-target="#profile1" aria-controls="profile1">Result Images</a>
-      </li>
+      </li> -->
     </ul>
 
     <div class="tab-content" id="myTabContent" style=" ">
@@ -159,9 +159,9 @@
         </div>
       </div>
 
-      <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="result-tab">
-        <!-- This is result images. -->
-        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+      <!-- <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="result-tab">
+         This is result images. -->
+        <!--<div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             {% for my_file2 in my_result_file_names %}
                   <li data-target="#carouselExampleIndicators2" data-slide-to={{forloop.counter0}} class="{% if forloop.first %} active {% endif %}" aria-current="true" aria-label={{forloop.counter}}></li>
@@ -183,7 +183,7 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
     <center>
     <button style="margin-top:100px;" class="btn btn-primary" type="submit" name="start" id="start">Generate PDF</button>

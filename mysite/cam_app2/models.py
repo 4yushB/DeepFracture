@@ -1,7 +1,9 @@
+from tkinter import Image
 from django.db import models
 from django.shortcuts import render
 from django.conf import settings
 from django import forms
+from PIL import Image
 
 from modelcluster.fields import ParentalKey
 
@@ -21,7 +23,7 @@ from pathlib import Path
 
 from streams import blocks
 
-import sqlite3, datetime, os, uuid, glob
+import sqlite3, datetime, os, uuid, glob, shutil
 #import detect
 
 str_uuid = uuid.uuid4()  # The UUID for image uploading
@@ -56,6 +58,7 @@ class ImagePage(Page):
     template = "cam_app2/image.html"
 
     max_count = 2
+    
 
     name_title = models.CharField(max_length=100, blank=True, null=True)
     name_subtitle = RichTextField(features=["bold", "italic"], blank=True)
@@ -88,6 +91,10 @@ class ImagePage(Page):
         if request.POST.get('start')=="":
             print(request.POST.get('start'))
             print("Start selected new2")
+            result_dir = r'C:\Users\4yush\Documents\DeepFracture\mysite\cam_app2\Test1\yolov5\runs\detect'
+            shutil.rmtree(result_dir)
+            os.makedirs(result_dir, exist_ok=True)
+            context["my_result_file_names"] = []
             file1 = open(r'C:\Users\4yush\Documents\DeepFracture\mysite\media\uploadedPics\img_list.txt', 'r')
             lines = file1.readlines()
             #this for loop iterates through the whole folder for items, then if the item is a file (and not a directory) it will run the detect script
@@ -98,16 +105,34 @@ class ImagePage(Page):
                 #if os.path.isfile(f): #this checks if f is a file, and not a directory
                 os.system('python cam_app2\Test1\yolov5\detect.py --source=' + path + ' --weights='+r'C:\Users\4yush\Documents\DeepFracture\mysite\cam_app2\Test1\yolov5\runs\train\exp2\weights\best.pt' + '  --img=416 --conf=0.5 --save-txt')
                 print(path)
-                with open(Path(f'{settings.MEDIA_ROOT}/Result/Result.txt'), 'a') as f:
-                    f.write(str(filename))
-                    f.write("\n")
+                
                 
                     #the final line runs the detect script. only need to change:
                     # detect script path
                     # source img path that you want to test
                     # weights path. Can choose to use either last.pt or best.pt
                     # can change the other parameters if wanted but i'm not 100% sure what they do
-            #return render(request, "cam_app2/image.html", context)
+            result_dir = r'C:\Users\4yush\Documents\DeepFracture\mysite\cam_app2\Test1\yolov5\runs\detect'
+            for fname in os.listdir(result_dir):
+                exp_dir = os.path.join(result_dir, fname)
+                print(exp_dir)
+                for subfname in os.listdir(exp_dir):
+                    result_img_path = os.path.join(exp_dir, subfname)
+                    #print(result_img_path)
+                    if result_img_path.endswith(".jpg"):
+                        print(result_img_path)
+                        with open(Path(f'{settings.MEDIA_ROOT}/Result/Result.txt'), 'a') as result_txt:
+                            result_txt.write(str(result_img_path))
+                            result_txt.write("\n")
+                            result_txt.close()
+            #file2 = open(r'C:\Users\4yush\Documents\DeepFracture\mysite\media\Result\Result.txt', 'r')
+            #lines2 = file2.readlines()
+            #for line in lines2:
+                #print(line + " hello")
+                            context["my_result_file_names"].append(str(f'{str(result_img_path)}'))
+                            img = Image.open(result_img_path)
+                            img.show()
+            return render(request, "cam_app2/image.html", context)
 
         if (request.FILES and emptyButtonFlag == False):
             print("reached here files")
